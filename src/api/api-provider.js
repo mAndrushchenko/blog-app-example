@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   baseURL: API_URL,
 });
 
-export async function get (url) {
+export async function get(url) {
   const { data } = await axiosInstance.request({
     method: 'GET',
     url: url,
@@ -15,18 +15,18 @@ export async function get (url) {
   return data;
 }
 
-export async function post (url, model) {
-  const { data } = await axiosInstance.request({
+export async function post(url, model) {
+  const res = await axiosInstance.request({
     method: 'POST',
     url: url,
     responseType: 'json',
     data: model,
   });
 
-  return data;
+  return res;
 }
 
-export async function put (url, model) {
+export async function put(url, model) {
   const { data } = await axiosInstance.request({
     method: 'PUT',
     url: url,
@@ -37,7 +37,7 @@ export async function put (url, model) {
   return data;
 }
 
-export async function _delete (url) {
+export async function _delete(url) {
   const { data } = await axiosInstance.request({
     method: 'delete',
     url: url,
