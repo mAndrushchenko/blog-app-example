@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Articles } from '../pages/Articles';
 import { Drawer } from '../components/Drawer';
@@ -13,6 +13,7 @@ function App () {
       <CssBaseline/>
       <Drawer>
         <Routes>
+          <Route path="/" element={<Navigate replace to="/articles" />} />
           <Route path="/articles" element={<Articles/>}/>
           <Route path="/articles/:articleId" element={<Article/>}/>
           <Route path="*" element={<NotFound/>}/>
