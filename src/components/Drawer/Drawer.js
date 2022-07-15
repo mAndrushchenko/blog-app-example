@@ -16,8 +16,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import HomeIcon from '@mui/icons-material/Home';
+import ArticleIcon from '@mui/icons-material/Article';
+import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -88,6 +89,7 @@ const StyledDrawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== '
 
 export const Drawer = ({ children }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -100,7 +102,7 @@ export const Drawer = ({ children }) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <CssBaseline/>
+      <CssBaseline />
       <StyledAppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -113,7 +115,7 @@ export const Drawer = ({ children }) => {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon/>
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
             Blog
@@ -123,14 +125,15 @@ export const Drawer = ({ children }) => {
       <StyledDrawer variant="permanent" open={open}>
         <StyledDrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon/> : <ChevronLeftIcon/>}
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </StyledDrawerHeader>
-        <Divider/>
+        <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Home', 'Create article'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
+                onClick={() => navigate(index % 2 !== 0 ? '/create-article' : '/articles')}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -144,41 +147,20 @@ export const Drawer = ({ children }) => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
+                  {index % 2 === 0 ? <HomeIcon /> : <ArticleIcon />}
                 </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }}/>
+                <ListItemText
+                  onClick={() => navigate(index % 2 !== 0 ? '/create-article' : '/articles')}
+                  primary={text}
+                  sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-        <Divider/>
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }}/>
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+
       </StyledDrawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <StyledDrawerHeader/>
+        <StyledDrawerHeader />
         {children}
       </Box>
     </Box>
