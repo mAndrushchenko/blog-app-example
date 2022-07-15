@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Button, Card, CardContent, CardActions, TextField, Grid, Typography } from '@mui/material';
 import { post, put } from '../../api/api-provider';
 import { Toast } from '../../components/Toast';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate, useMatch } from 'react-router-dom';
 
 export const CreateArticle = () => {
   const { articleId } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
+  const isCreateRoute = useMatch("/create-article");
 
   const [article, setArticle] = useState(state ? {
     title: state.data.title,
     body: state.data.body,
   } : {});
+
+  useEffect(() => {
+    if (!!isCreateRoute) {
+      setArticle({});
+    }
+
+  }, [isCreateRoute])
 
   const [isShowToast, setIsShowToast] = useState(false);
   const [message, setMessage] = useState();
