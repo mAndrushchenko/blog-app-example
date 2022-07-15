@@ -1,21 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 import { Loader } from '../../components/Loader';
 import { get } from '../../api/api-provider';
 import { useNavigate } from 'react-router-dom';
 import { Box, Card, CardActionArea, CardContent, Grid, Typography } from '@mui/material';
 import { format } from 'date-fns';
+import { Toast } from '../../components/Toast';
 
 export const Articles = () => {
   const navigate = useNavigate();
   const { data, isError, isLoading } = useQuery('articles', () => get('/articles'));
 
+  const [isShowToast, setIsShowToast] = useState(false);
+
   if (isLoading) {
-    return <Loader/>;
+    return <Loader />;
   }
 
   if (isError) {
-    return <Loader/>;
+    setIsShowToast(true);
+    return <Toast status={isShowToast} type="error" message="Something went wrong" setStatus={setIsShowToast} />;
   }
 
   const clickOnArticleHandler = (articleId) => {
@@ -43,9 +47,9 @@ export const Articles = () => {
 
                   <Box sx={{ display: 'flex', flexDirection: { xs: 'column', lg: 'row' }, marginBottom: 1 }}>
                     <Typography variant="body1"
-                                sx={{ marginRight: { xs: undefined, lg: 2 }, fontStyle: 'italic' }}>Created: {format(
-                      new Date(article.created_at),
-                      'dd/MM//yyyy hh:mm:ss a')}</Typography>
+                      sx={{ marginRight: { xs: undefined, lg: 2 }, fontStyle: 'italic' }}>Created: {format(
+                        new Date(article.created_at),
+                        'dd/MM//yyyy hh:mm:ss a')}</Typography>
                     <Typography variant="body1" sx={{ fontStyle: 'italic' }}>Updated: {format(
                       new Date(article.updated_at),
                       'dd/MM/yyyy hh:mm:ss a')}</Typography>

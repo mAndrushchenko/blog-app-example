@@ -149,7 +149,10 @@ export const Drawer = ({ children }) => {
                 >
                   {index % 2 === 0 ? <HomeIcon /> : <ArticleIcon />}
                 </ListItemIcon>
-                <ListItemText onClick={() => navigate(index % 2 !== 0 ? '/create-article' : '/articles')} primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  onClick={() => navigate(index % 2 !== 0 ? '/create-article' : '/articles')}
+                  primary={text}
+                  sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
           ))}
