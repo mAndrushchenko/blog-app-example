@@ -27,14 +27,14 @@ export async function post(url, model) {
 }
 
 export async function put(url, model) {
-  const { data } = await axiosInstance.request({
+  const res = await axiosInstance.request({
     method: 'PUT',
     url: url,
     responseType: 'json',
     data: model,
   });
 
-  return data;
+  return res;
 }
 
 export async function _delete(url) {

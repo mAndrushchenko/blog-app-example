@@ -4,8 +4,7 @@ import { Loader } from '../../components/Loader';
 import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material';
 import { get, _delete } from '../../api/api-provider';
 import { format } from 'date-fns';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 export const Article = () => {
   const { articleId } = useParams();
@@ -32,6 +31,9 @@ export const Article = () => {
       });
 
   };
+  const onEdit = () => {
+    navigate(`/edit-article/${articleId}`, { state: { data } })
+  }
 
   return (
     <Grid container rowSpacing={5} columnSpacing={2}>
@@ -72,7 +74,9 @@ export const Article = () => {
             display: 'flex',
             justifyContent: 'center',
           }}>
-            <Button sx={{ marginX: 1, marginY: 1 }} variant="contained" size="large" color="warning">Edit Article</Button>
+            <Button
+              sx={{ marginX: 1, marginY: 1 }}
+              variant="contained" size="large" color="warning" onClick={onEdit}>Edit Article</Button>
             <Button sx={{ marginX: 1, marginY: 1 }} variant="contained" size="large" color="error" onClick={onDelete}>Delete</Button>
           </CardActions>
         </Card>

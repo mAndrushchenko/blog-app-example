@@ -1,39 +1,72 @@
 import React, { useState } from 'react';
 import { Box, Button, Card, CardContent, CardActions, TextField, Grid, Typography } from '@mui/material';
-import { post } from '../../api/api-provider';
+import { post, put } from '../../api/api-provider';
 import { Toast } from '../../components/Toast';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
 export const CreateArticle = () => {
+  const { articleId } = useParams();
+  const { state } = useLocation();
+  const navigate = useNavigate();
 
-  const [article, setArticle] = useState({});
+  const [article, setArticle] = useState(state ? {
+    title: state.data.title,
+    body: state.data.body,
+  } : {});
+
   const [isShowToast, setIsShowToast] = useState(false);
   const [message, setMessage] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState();
+
   const { title, body } = article;
 
-  const isDisabled = !title || !body;
-
-
+  const isDisabled = !title || !body || isLoading;
 
   const onChangeHandler = (e) => {
     setArticle(prev => ({ ...prev, [e.target.name]: e.target.value }))
   };
 
-  const onCreate = () => {
+  const onSave = () => {
+    setIsLoading(true);
     post('/articles', article)
       .then(res => {
         if (res.status === 200 || res.status === 201) {
           setMessage('Article created');
           setIsShowToast(true);
+          setIsLoading(false);
           setArticle({});
         } else {
           setMessage('Something went wrong. Try again later');
           setErrors(res?.errors);
           setIsShowToast(true);
-
+          setIsLoading(false);
         }
       });
   }
+
+  const onEdit = () => {
+    setIsLoading(true);
+    put(`/articles/${articleId}`, article)
+      .then(res => {
+        if (res.status === 200 || res.status === 201) {
+          setMessage('Article updated');
+          setIsShowToast(true);
+          setIsLoading(false);
+        } else {
+          setMessage('Something went wrong. Try again later');
+          setErrors(res?.errors);
+          setIsShowToast(true);
+          setIsLoading(false);
+        }
+      });
+  }
+
+  const onCancel = () => {
+    navigate(`/articles/${articleId}`);
+    setArticle({});
+  };
+
   return (
     <>
       <Grid container rowSpacing={5} columnSpacing={2}>
@@ -57,7 +90,7 @@ export const CreateArticle = () => {
               maxWidth: 500,
             }}>
               <CardContent>
-                <Typography variant="h2" sx={{ marginBottom: 2 }}>Create Article</Typography>
+                <Typography variant="h2" sx={{ marginBottom: 2 }}>{articleId ? 'Edit' : 'Create'} Article</Typography>
                 <TextField
                   name='title'
                   value={title || ""}
@@ -83,7 +116,8 @@ export const CreateArticle = () => {
                 justifyContent: 'center',
                 marginBottom: 2,
               }}>
-                <Button variant="contained" size="large" disabled={isDisabled} onClick={onCreate} >Create Article</Button>
+                <Button variant="contained" size="large" disabled={isDisabled} onClick={articleId ? onEdit : onSave} >Save</Button>
+                {articleId && (<Button variant="contained" color="error" size="large" onClick={onCancel}>Cancel</Button>)}
               </CardActions>
             </Card>
           </Box>

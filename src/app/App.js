@@ -18,6 +18,7 @@ function App() {
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:articleId" element={<Article />} />
           <Route path="/create-article" element={<CreateArticle />} />
+          <Route path="/edit-article/:articleId" element={<CreateArticle />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Drawer>
