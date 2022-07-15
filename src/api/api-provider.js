@@ -38,10 +38,10 @@ export async function put(url, model) {
 }
 
 export async function _delete(url) {
-  const { data } = await axiosInstance.request({
+  const res = await axiosInstance.request({
     method: 'delete',
     url: url,
   });
 
-  return data;
+  return res;
 }
