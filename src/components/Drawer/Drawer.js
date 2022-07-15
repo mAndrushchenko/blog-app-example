@@ -16,8 +16,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import HomeIcon from '@mui/icons-material/Home';
+import ArticleIcon from '@mui/icons-material/Article';
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -147,7 +147,7 @@ export const Drawer = ({ children }) => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index % 2 === 0 ? <HomeIcon /> : <ArticleIcon />}
                 </ListItemIcon>
                 <ListItemText onClick={() => navigate(index % 2 !== 0 ? '/create-article' : '/articles')} primary={text} sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
