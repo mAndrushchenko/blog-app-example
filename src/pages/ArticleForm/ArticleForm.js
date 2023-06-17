@@ -4,7 +4,7 @@ import { post, put } from '../../api/api-provider';
 import { Toast } from '../../components/Toast';
 import { useParams, useLocation, useNavigate, useMatch } from 'react-router-dom';
 
-export const CreateArticle = () => {
+export const ArticleForm = () => {
   const { articleId } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();

@@ -19,6 +19,8 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import ArticleIcon from '@mui/icons-material/Article';
 import { useNavigate } from 'react-router-dom';
+import { Login, Logout } from '@mui/icons-material';
+import { useAuthContext } from '../../context';
 
 const drawerWidth = 240;
 
@@ -91,6 +93,7 @@ export const Drawer = ({ children }) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const { isLogged, logout } = useAuthContext();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -99,6 +102,16 @@ export const Drawer = ({ children }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const links = [
+    { title: 'Home', icon: <HomeIcon />, path: '/articles' },
+    { title: 'Create article', icon: <ArticleIcon />, path: '/create-article' },
+    (isLogged ? { title: 'Logout', icon: <Logout />, path: null } : {
+      title: 'Login',
+      icon: <Login />,
+      path: '/login'
+    }),
+  ];
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -130,10 +143,10 @@ export const Drawer = ({ children }) => {
         </StyledDrawerHeader>
         <Divider />
         <List>
-          {['Home', 'Create article'].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+          {links.map(({ title, path, icon }) => (
+            <ListItem key={title} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
-                onClick={() => navigate(index % 2 !== 0 ? '/create-article' : '/articles')}
+                onClick={() => path ? navigate(path) : logout()}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -147,12 +160,12 @@ export const Drawer = ({ children }) => {
                     justifyContent: 'center',
                   }}
                 >
-                  {index % 2 === 0 ? <HomeIcon /> : <ArticleIcon />}
+                  {icon}
                 </ListItemIcon>
                 <ListItemText
-                  onClick={() => navigate(index % 2 !== 0 ? '/create-article' : '/articles')}
-                  primary={text}
-                  sx={{ opacity: open ? 1 : 0 }} />
+                  onClick={() => path ? navigate(path) : logout()}
+                  primary={title}
+                  sx={{ opacity: open ? 1 : 0, transition: 'all 0.3s' }} />
               </ListItemButton>
             </ListItem>
           ))}
