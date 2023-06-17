@@ -10,7 +10,6 @@ import { Toast } from '../../components/Toast';
 export const Articles = () => {
   const navigate = useNavigate();
   const { data, isError, isLoading } = useQuery('articles', () => get('/articles'));
-
   const [isShowToast, setIsShowToast] = useState(false);
 
   if (isLoading) {
@@ -33,8 +32,8 @@ export const Articles = () => {
       </Grid>
 
       {
-        data.map((article, index) => {
-          return <Grid key={index} item xs={12} md={6} textAlign="left">
+        data?.map((article, index) => {
+          return <Grid key={index} xs={12} md={6} textAlign="left">
             <Card sx={{
               minWidth: 275,
               boxShadow: '0px 16px 30px rgb(0 0 0 / 10%)',

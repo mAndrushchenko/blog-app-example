@@ -1,11 +1,20 @@
 import axios from 'axios';
 import { API_URL } from '../constants';
+import { ARTICLES_MOCK } from '../__mock__';
 
 const axiosInstance = axios.create({
   baseURL: API_URL,
 });
 
 export async function get(url) {
+  if (process.env.REACT_APP_ENABLE_MOCK === 'true') {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res(ARTICLES_MOCK)
+      }, 2000)
+    })
+  }
+
   const { data } = await axiosInstance.request({
     method: 'GET',
     url: url,
