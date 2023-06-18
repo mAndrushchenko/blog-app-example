@@ -1,10 +1,11 @@
 import { Route, Routes, Navigate } from 'react-router-dom';
-import CssBaseline from '@mui/material/CssBaseline';
 
 import './App.css';
 import { Registration, Article, Articles, ArticleForm, Login, NotFound } from '../pages';
-import { Drawer } from '../components';
+import { Header } from '../components';
 import { useAuthContext } from '../context';
+import { Container } from '@mui/material';
+import { routes } from '../constants/routes';
 
 const RouteProtected = ({ element, redirectPath, isPublic }) => {
   const { isLogged } = useAuthContext();
@@ -19,28 +20,28 @@ const RouteProtected = ({ element, redirectPath, isPublic }) => {
 function App () {
   return (
     <div className="App">
-      <CssBaseline />
-      <Drawer>
+      <Header />
+      <Container>
         <Routes>
-          <Route path="/" element={<Navigate replace to="/articles" />} />
-          <Route path="/articles" element={<Articles />} />
-          <Route path="/articles/:articleId" element={<Article />} />
+          <Route path="/" element={<Navigate replace to={routes.ARTICLES} />} />
+          <Route path={routes.ARTICLES} element={<Articles />} />
+          <Route path={routes.ARTICLE} element={<Article />} />
           <Route
-            path="/create-article"
-            element={<RouteProtected redirectPath={'/login'} element={<ArticleForm />} />}
+            path={routes.CREATE_ARTICLE}
+            element={<RouteProtected redirectPath={routes.LOGIN} element={<ArticleForm />} />}
           />
-          <Route path="/edit-article/:articleId" element={<ArticleForm />} />
+          <Route path={routes.EDIT_ARTICLE} element={<ArticleForm />} />
           <Route
-            path="/registration"
+            path={routes.REGISTRATION}
             element={<RouteProtected isPublic element={<Registration />} />}
           />
           <Route
-            path="/login"
+            path={routes.LOGIN}
             element={<RouteProtected isPublic element={<Login />} />}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Drawer>
+      </Container>
     </div>
   );
 }

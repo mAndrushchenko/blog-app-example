@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import App from './app/App';
-import { ProviderAuth } from './context';
+import { ProviderAuth, ProviderTheme } from './context';
 
 import './index.css';
 
@@ -25,9 +25,11 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ProviderAuth>
-        <Router>
-          <App />
-        </Router>
+        <ProviderTheme>
+          <Router>
+            <App />
+          </Router>
+        </ProviderTheme>
       </ProviderAuth>
     </QueryClientProvider>
   </React.StrictMode>,
