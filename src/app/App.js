@@ -21,7 +21,7 @@ function App () {
   return (
     <div className="App">
       <Header />
-      <Container>
+      <Container sx={{ mb: '104px' }}>
         <Routes>
           <Route path="/" element={<Navigate replace to={routes.ARTICLES} />} />
           <Route path={routes.ARTICLES} element={<Articles />} />
