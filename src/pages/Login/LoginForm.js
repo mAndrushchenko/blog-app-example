@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, CircularProgress, Box, Typography } from '@mui/material';
 import { useAuthContext } from '../../context';
+import { Loader } from '../../components';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -55,6 +56,7 @@ const LoginForm = () => {
         required
         value={formData.email}
         onChange={handleChange}
+        error={error}
       />
       <TextField
         name="password"
@@ -64,15 +66,14 @@ const LoginForm = () => {
         required
         value={formData.password}
         onChange={handleChange}
+        error={error}
+        helperText={error}
       />
-      {isLoading ? (
-        <CircularProgress />
-      ) : (
-        <Button variant="contained" type="submit">
-          Login
-        </Button>
-      )}
-      {error && <Typography color="error">{error}</Typography>}
+      {isLoading && <Loader />}
+
+      <Button variant="contained" type="submit" disabled={isLoading}>
+        Login
+      </Button>
     </Box>
   );
 };

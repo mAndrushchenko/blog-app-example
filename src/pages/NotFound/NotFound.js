@@ -1,20 +1,14 @@
 import React from 'react';
 
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { routes } from '../../constants';
 
-export const NotFound = () => {
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: 'calc(100vh - 30px * 2)',
-        typography: 'h1',
-      }}
-    >
-      Nothing was found
-    </Box>
-  );
-};
+export const NotFound = () =>  (
+  <Box>
+    <Typography variant="h5">
+      Nothing was found :(
+    </Typography>
+    <Link to={routes.ARTICLES} style={{ color: 'inherit' }}>Back to articles</Link>
+  </Box>
+);

@@ -5,7 +5,7 @@ import { Registration, Article, Articles, ArticleForm, Login, NotFound } from '.
 import { Header } from '../components';
 import { useAuthContext } from '../context';
 import { Container } from '@mui/material';
-import { routes } from '../constants/routes';
+import { routes } from '../constants';
 
 const RouteProtected = ({ element, redirectPath, isPublic }) => {
   const { isLogged } = useAuthContext();
