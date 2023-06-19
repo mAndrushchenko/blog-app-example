@@ -15,7 +15,7 @@ const queryClient = new QueryClient({
       refetchOnmount: false,
       refetchOnReconnect: false,
       retry: false,
-      staleTime: 5 * (60 * 1000) // 5 minutes,
+      staleTime: Number(process.env.REACT_APP_STALE_TIME)
     },
   },
 });

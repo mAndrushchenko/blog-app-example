@@ -30,10 +30,10 @@ export const Articles = () => {
       <Typography variant="h2" sx={{ marginBottom: 5 }}>Articles</Typography>
 
       <Grid container rowSpacing={5} columnSpacing={4}>
-        {articlesWithImages.map(({ id, created_at, updated_at, ...restArticleProps }) => (
+        {articlesWithImages.map(({ id, created_at, updated_at, ...restArticleProps }, index) => (
           <Grid key={id} item xs={12} md={6}>
             <Link
-              to={routes.ARTICLE.replace(':articleId', id)}
+              to={routes.ARTICLE.replace(':articleId', `${id}?image=${index}`)}
               style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}
             >
               <CardArticle dateCreated={created_at} dateUpdated={updated_at} {...restArticleProps} />
